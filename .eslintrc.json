@@ -1,0 +1,10 @@
+{
+  "root": true,
+  "extends": ["naver", "eslint:recommended"],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "tsconfigRootDir": "__dirname"
+  },
+  "plugins": ["react"],
+  "rules": {}
+}
