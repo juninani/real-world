@@ -14,9 +14,11 @@
     "eslint-config-naver": "^2.1.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-router-dom": "^6.4.3",
     "recoil": "^0.7.6",
     "recoil-persist": "^4.2.0",
-    "typescript-eslint": "^0.0.1-alpha.0"
+    "typescript-eslint": "^0.0.1-alpha.0",
+    "vite-plugin-rewrite-all": "^1.0.0"
   },
   "devDependencies": {
     "@types/react": "latest",

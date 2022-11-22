@@ -3,13 +3,13 @@ import { recoilPersist } from "recoil-persist";
 
 const { persistAtom } = recoilPersist();
 
-const NavMenu = atom({
+const NavMenu = atom<[]>({
   key: "nav",
   default: [],
   effects_UNSTABLE: [persistAtom],
 });
 
-const activeNav = atom({
+const activeNav = atom<string>({
   key: "activeNav",
   default: "/home",
   effects_UNSTABLE: [persistAtom],
