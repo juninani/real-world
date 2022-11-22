@@ -10,7 +10,7 @@ function App() {
     <RecoilRoot>
       <div className="App">
         <Header />
-        {/* <RoutesFunction /> */}
+        <RoutesFunction />
         <Footer />
       </div>
     </RecoilRoot>

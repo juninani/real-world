@@ -3,7 +3,7 @@ import Profile from "@/pages/profile";
 import ManagementArticle from "@/pages/managementArticle";
 import Article from "@/pages/article";
 import Auth from "@/pages/auth";
-
+import Settings from "@/pages/settings";
 interface PageInfo {
   path: string;
   component: (props?: any) => JSX.Element;
@@ -33,6 +33,10 @@ const pages: Array<Readonly<PageInfo>> = [
   {
     path: "/sign-in",
     component: Auth,
+  },
+  {
+    path: "/settings",
+    component: Settings,
   },
 ];
 
