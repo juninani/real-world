@@ -11,7 +11,7 @@ const SignUp = () => {
   });
   const postSignUp = async (data: addUser) => {
     const res = await User.PostAddUse(data);
-    if (res.code === 200) {
+    if (res.code === 201) {
       console.log("회언가입 성공");
     } else {
       console.log("회원가입 실패");
