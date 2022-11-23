@@ -11,12 +11,13 @@ const POST_ADD_USER = `/users`;
 
 class UserAPI {
   PostAddUse = async (
-    data: addUser,
+    data: { user: addUser },
     config?: AxiosRequestConfig
   ): Promise<IResponse> => {
     console.log(data, "data");
     try {
       const res = await post(POST_ADD_USER, data, { ...config });
+      console.log(res, "res");
       return res.data;
     } catch (e: any) {
       return e.response.data;

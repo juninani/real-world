@@ -5,28 +5,34 @@ import { addUser } from "@/common/module/Api/interface/user";
 
 const SignUp = () => {
   const [userData, setUserData] = useState<addUser>({
-    name: "",
+    username: "",
     email: "",
     password: "",
   });
   const postSignUp = async (data: addUser) => {
-    const res = await User.PostAddUse(data);
-    if (res.code === 201) {
-      console.log("회언가입 성공");
+    const res = await User.PostAddUse({ user: data });
+    console.log(res, "data");
+    if (res.code === 200) {
+      alert("회원가입 성공");
+      return;
     } else {
-      console.log("회원가입 실패");
+      alert("회원가입 실패");
     }
   };
   const inputData = (key: string, value: string) => {
-    console.log("key", key, "value:", "value:", value);
     setUserData({ ...userData, [key]: value });
   };
-  const btnHander = () => {
+  const signUpSumit = () => {
     postSignUp(userData);
   };
 
   return (
-    <Userlayout title="Sign up" onClick={btnHander} onChange={inputData} />
+    <Userlayout
+      title="Sign up"
+      name
+      onClick={signUpSumit}
+      onChange={inputData}
+    />
   );
 };
 

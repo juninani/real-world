@@ -9,6 +9,7 @@ type AxiosUtilProps = {
 interface IResponse {
   code: number;
   description?: any;
+  errors?: "string";
 }
 
 const defaultResponse = {
@@ -18,7 +19,7 @@ const defaultResponse = {
 
 const apiClientInfo: AxiosInstance = axios.create({
   baseURL: "https://api.realworld.io/api",
-  timeout: 2000,
+  timeout: 20000,
 });
 
 const { get, put, post, delete: destroy } = apiClientInfo;

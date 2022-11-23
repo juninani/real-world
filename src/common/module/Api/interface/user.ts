@@ -6,7 +6,7 @@ interface userLogin {
 interface addUser {
   email: string;
   password: string;
-  name: string;
+  username: string;
 }
 
 interface userInfo {
