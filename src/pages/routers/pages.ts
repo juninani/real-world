@@ -1,8 +1,9 @@
 import Home from "@/pages/home";
 import Profile from "@/pages/profile";
-import ManagementArticle from "@/pages/managementArticle";
+import ManagementArticle from "@/pages/management-article";
 import Article from "@/pages/article";
-import Auth from "@/pages/auth";
+import signIn from "@/pages/auth/sign-in";
+import signUp from "@/pages/auth/sign-up";
 import Settings from "@/pages/settings";
 interface PageInfo {
   path: string;
@@ -28,11 +29,11 @@ const pages: Array<Readonly<PageInfo>> = [
   },
   {
     path: "/sign-up",
-    component: Auth,
+    component: signUp,
   },
   {
     path: "/sign-in",
-    component: Auth,
+    component: signIn,
   },
   {
     path: "/settings",
