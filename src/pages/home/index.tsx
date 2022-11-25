@@ -4,6 +4,7 @@ import {
   IGetArticleListAll,
   TagsProperty,
 } from "@/common/module/api/interface/article";
+import { Pagination } from "@/common";
 import PreviewBox from "./previewBox";
 import TagBox from "./tagBox";
 
@@ -12,25 +13,8 @@ const Home = () => {
   const [totalCount, setTotalCount] = useState<number>();
   const [tags, setTags] = useState<TagsProperty>();
   const [curTag, setCurTag] = useState<string>("");
-  const LIMIT = 5;
-
-  const getArticleListAll = async () => {
-    const res = await Article.getAllArticleList({
-      offset: 0,
-      limit: LIMIT,
-      tag: curTag !== "" ? curTag : undefined,
-    });
-    setArticleAll(res.data);
-    setTotalCount(res.data?.articlesCount);
-  };
-  const getTagsList = async () => {
-    const res = await Article.getArticleTagAll();
-    if (res.status === 200) {
-      setTags(res.data);
-      return;
-    }
-    console.log(res.errors);
-  };
+  const [page, setPage] = useState<number>(0);
+  const LIMIT = 10;
 
   useEffect(() => {
     getArticleListAll();
@@ -40,7 +24,32 @@ const Home = () => {
   useEffect(() => {
     getArticleListAll();
     console.log(curTag);
-  }, [curTag]);
+  }, [curTag, page]);
+
+  const getArticleListAll = async () => {
+    const res = await Article.getAllArticleList({
+      limit: LIMIT,
+      tag: curTag !== "" ? curTag : undefined,
+      offset: page,
+    });
+    setArticleAll(res.data);
+    setTotalCount(res.data?.articlesCount);
+  };
+
+  const getTagsList = async () => {
+    const res = await Article.getArticleTagAll();
+    if (res.status === 200) {
+      setTags(res.data);
+      return;
+    }
+    console.log(res.errors);
+  };
+
+  const pageChangeEvent = (item: number) => {
+    console.log(item);
+    setPage(item);
+  };
+
   return (
     <div className="home-page">
       <div className="banner">
@@ -86,6 +95,13 @@ const Home = () => {
                 );
               })}
             </>
+            <Pagination
+              className="ng-isolate-scope"
+              totalCount={totalCount ? totalCount : 0}
+              limit={LIMIT}
+              currentPage={page}
+              onClick={(item) => pageChangeEvent(item)}
+            />
           </div>
           <TagBox tags={tags?.tags} setTag={setCurTag} />
         </div>
