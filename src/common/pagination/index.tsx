@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 
 interface paginationProps {
   className: string;
@@ -17,11 +17,6 @@ const Pagination = ({
 }: paginationProps) => {
   const maxPage =
     Math.floor(totalCount / limit) + (totalCount % limit > 0 ? 1 : 0);
-  useEffect(() => {
-    console.log(maxPage);
-    console.log(totalCount);
-    console.log(currentPage);
-  }, []);
 
   const pageMoveEvent = (item: number) => {
     onClick(item);
