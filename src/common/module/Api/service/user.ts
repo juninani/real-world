@@ -1,12 +1,7 @@
 import { AxiosRequestConfig } from "axios";
-import {
-  post,
-  get,
-  put,
-  destroy,
-  IResponse,
-} from "@/common/module/Api/axios-util";
-import { addUser } from "@/common/module/Api/interface/user";
+import { post, IResponse } from "@/common/module/api/axios-util";
+import { addUser } from "@/common/module/api/interface/user";
+
 const POST_ADD_USER = `/users`;
 
 class UserAPI {
@@ -14,10 +9,8 @@ class UserAPI {
     data: { user: addUser },
     config?: AxiosRequestConfig
   ): Promise<IResponse> => {
-    console.log(data, "data");
     try {
       const res = await post(POST_ADD_USER, data, { ...config });
-      console.log(res, "res");
       return res.data;
     } catch (e: any) {
       return e.response.data;

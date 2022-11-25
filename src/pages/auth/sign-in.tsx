@@ -1,6 +1,7 @@
 import React, { useState } from "react";
+import { userLogin } from "@/common/module/api/interface/user";
 import Userlayout from "./user-layout";
-import { userLogin } from "@/common/module/Api/interface/user";
+
 const SignIn = () => {
   const [loginData, setLoginData] = useState<userLogin>({
     email: "",

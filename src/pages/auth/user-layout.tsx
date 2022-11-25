@@ -1,6 +1,4 @@
-import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
-import { addUser } from "@/common/module/Api/interface/user";
+import React from "react";
 
 interface authProps {
   title: string;
