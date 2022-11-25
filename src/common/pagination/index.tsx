@@ -21,7 +21,7 @@ const Pagination = ({
     console.log(maxPage);
     console.log(totalCount);
     console.log(currentPage);
-  }, [totalCount]);
+  }, []);
 
   const pageMoveEvent = (item: number) => {
     onClick(item);
@@ -29,23 +29,25 @@ const Pagination = ({
 
   return (
     <div className={className}>
-      <nav>
-        <ul className="pagination">
-          {Array.from({ length: maxPage }, (item, index) => {
-            return (
-              <li
-                className={`page-item ng-scope ${
-                  index === currentPage ? "active" : ""
-                }`}
-                ng-repeat="pageNumber in $ctrl.pageRange($ctrl.totalPages)"
-                onClick={() => pageMoveEvent(index)}
-              >
-                <p className="page-link ng-binding">{index + 1}</p>
-              </li>
-            );
-          })}
-        </ul>
-      </nav>
+      {maxPage === 1 ? null : (
+        <nav>
+          <ul className="pagination">
+            {Array.from({ length: maxPage }, (item, index) => {
+              return (
+                <li
+                  className={`page-item ng-scope ${
+                    index === currentPage ? "active" : ""
+                  }`}
+                  ng-repeat="pageNumber in $ctrl.pageRange($ctrl.totalPages)"
+                  onClick={() => pageMoveEvent(index)}
+                >
+                  <p className="page-link ng-binding">{index + 1}</p>
+                </li>
+              );
+            })}
+          </ul>
+        </nav>
+      )}
     </div>
   );
 };
