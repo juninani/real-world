@@ -22,7 +22,7 @@ interface TagsProperty {
 interface artcileSection {
   tag?: string | undefined;
   author?: string;
-  favorited?: string;
+  favorited?: string | null;
   limit?: number;
   offset?: number;
 }
@@ -34,6 +34,10 @@ interface IGetArticleListAll {
 interface articleTag {
   data: string;
 }
+
+// interface articleFav{
+
+// }
 
 export type {
   articleAll,

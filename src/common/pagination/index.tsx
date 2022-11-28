@@ -30,6 +30,7 @@ const Pagination = ({
             {Array.from({ length: maxPage }, (item, index) => {
               return (
                 <li
+                  key={index}
                   className={`page-item ng-scope ${
                     index === currentPage ? "active" : ""
                   }`}

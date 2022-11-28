@@ -5,6 +5,8 @@ import {
   TagsProperty,
 } from "@/common/module/api/interface/article";
 import { Pagination } from "@/common";
+import { getToken, getLocal } from "@/common/module/token";
+import { useUpdateEffect } from "react-use";
 import PreviewBox from "./previewBox";
 import TagBox from "./tagBox";
 
@@ -19,18 +21,21 @@ const Home = () => {
   useEffect(() => {
     getArticleListAll();
     getTagsList();
-    console.log(totalCount);
   }, []);
-  useEffect(() => {
-    getArticleListAll();
-    console.log(curTag);
-  }, [curTag, page]);
 
+  useUpdateEffect(() => {
+    getArticleListAll();
+  }, [curTag, page, getLocal("userName")]);
+  useUpdateEffect(() => {
+    setPage(0);
+  }, [curTag]);
   const getArticleListAll = async () => {
     const res = await Article.getAllArticleList({
       limit: LIMIT,
       tag: curTag !== "" ? curTag : undefined,
       offset: page,
+      //즐겨찾기 로직
+      // favorited: getLocal("userName") ? getLocal("userName") : null,
     });
     setArticleAll(res.data);
     setTotalCount(res.data?.articlesCount);
@@ -64,11 +69,14 @@ const Home = () => {
           <div className="col-md-9">
             <div className="feed-toggle">
               <ul className="nav nav-pills outline-active">
-                <li className="nav-item">
-                  <a className="nav-link disabled" href="">
-                    Your Feed
-                  </a>
-                </li>
+                {getToken ? (
+                  <li className="nav-item">
+                    <a className="nav-link disabled" href="">
+                      Your Feed
+                    </a>
+                  </li>
+                ) : null}
+
                 <li className="nav-item">
                   <a className="nav-link active" href="">
                     Global Feed
