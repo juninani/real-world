@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { addUser } from "@/common/module/api/interface/user";
 import User from "@/common/module/api/service/user";
+import { addUser } from "@/common/module/api/interface/user";
 import Userlayout from "./user-layout";
 
 const SignUp = () => {
@@ -11,12 +11,11 @@ const SignUp = () => {
   });
   const postSignUp = async (data: addUser) => {
     const res = await User.PostAddUse({ user: data });
-    if (res.code === 200) {
+    if (!res.errors) {
       alert("회원가입 성공");
       return;
-    } else {
-      alert("회원가입 실패");
     }
+    alert("회원가입 실패");
   };
   const inputData = (key: string, value: string) => {
     setUserData({ ...userData, [key]: value });

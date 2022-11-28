@@ -1,13 +1,24 @@
-import React from "react";
+// import { useLocation } from "react-router-dom";
+// import { addUser } from "@/common/module/api/interface/user";
 
+type errType = {
+  "email or password"?: [];
+};
 interface authProps {
   title: string;
   onChange?: (key: string, value: string) => void;
   onClick?: () => void;
   name?: boolean;
+  errors?: errType;
 }
 
-const index = ({ title, onChange, onClick, name = false }: authProps) => {
+const index = ({
+  title,
+  onChange,
+  onClick,
+  name = false,
+  errors,
+}: authProps) => {
   const buttonHander = () => {
     if (onClick) onClick();
   };
@@ -25,7 +36,12 @@ const index = ({ title, onChange, onClick, name = false }: authProps) => {
               )}
             </p>
             <ul className="error-messages">
-              {/* <li>That email is already taken</li> */}
+              {}
+              <li>
+                {errors && errors["email or password"]
+                  ? `${Object.keys(errors)}_${errors["email or password"]}`
+                  : ""}
+              </li>
             </ul>
             {name ? (
               <fieldset className="form-group">
