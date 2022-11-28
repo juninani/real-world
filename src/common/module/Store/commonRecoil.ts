@@ -3,16 +3,10 @@ import { recoilPersist } from "recoil-persist";
 
 const { persistAtom } = recoilPersist();
 
-const NavMenu = atom<[]>({
-  key: "nav",
-  default: [],
+const userAccountStatus = atom({
+  key: "userAccount",
+  default: false,
   effects_UNSTABLE: [persistAtom],
 });
 
-const activeNav = atom<string>({
-  key: "activeNav",
-  default: "/home",
-  effects_UNSTABLE: [persistAtom],
-});
-
-export { NavMenu, activeNav };
+export { userAccountStatus };

@@ -1,32 +1,36 @@
 import React, { useState } from "react";
-import User from "@/common/module/Api/service/user";
+import User from "@/common/module/api/service/user";
 import Userlayout from "./user-layout";
-import { addUser } from "@/common/module/Api/interface/user";
+import { addUser } from "@/common/module/api/interface/user";
 
 const SignUp = () => {
   const [userData, setUserData] = useState<addUser>({
-    name: "",
+    username: "",
     email: "",
     password: "",
   });
   const postSignUp = async (data: addUser) => {
-    const res = await User.PostAddUse(data);
-    if (res.code === 200) {
-      console.log("회언가입 성공");
-    } else {
-      console.log("회원가입 실패");
+    const res = await User.PostAddUse({ user: data });
+    if (!res.errors) {
+      alert("회원가입 성공");
+      return;
     }
+    alert("회원가입 실패");
   };
   const inputData = (key: string, value: string) => {
-    console.log("key", key, "value:", "value:", value);
     setUserData({ ...userData, [key]: value });
   };
-  const btnHander = () => {
+  const signUpSumit = () => {
     postSignUp(userData);
   };
 
   return (
-    <Userlayout title="Sign up" onClick={btnHander} onChange={inputData} />
+    <Userlayout
+      title="Sign up"
+      name
+      onClick={signUpSumit}
+      onChange={inputData}
+    />
   );
 };
 
