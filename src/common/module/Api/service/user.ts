@@ -5,8 +5,15 @@ import {
   put,
   destroy,
   IResponse,
-} from "@/common/module/Api/axios-util";
-import { addUser } from "@/common/module/Api/interface/user";
+  defaultResponse,
+} from "@/common/module/api/axios-util";
+import {
+  addUser,
+  userLogin,
+  userInfo,
+} from "@/common/module/api/interface/user";
+
+const GET_USER_LOGIN = `/users/login`;
 const POST_ADD_USER = `/users`;
 
 class UserAPI {
@@ -18,6 +25,19 @@ class UserAPI {
     try {
       const res = await post(POST_ADD_USER, data, { ...config });
       console.log(res, "res");
+      return res.data;
+    } catch (e: any) {
+      return e.response.data;
+    }
+  };
+
+  LoginUserData = async (
+    data: { user: userLogin },
+    config?: AxiosRequestConfig
+  ): Promise<userInfo> => {
+    try {
+      const res = await post(GET_USER_LOGIN, data, { ...config });
+      console.log(res);
       return res.data;
     } catch (e: any) {
       return e.response.data;

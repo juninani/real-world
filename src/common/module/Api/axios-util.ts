@@ -1,17 +1,22 @@
 import axios, { AxiosError, AxiosInstance, AxiosResponse } from "axios";
 import React from "react";
 import { useNavigate } from "react-router-dom";
-
+import { getToken } from "@/common/module/token";
 type AxiosUtilProps = {
   children: any;
 };
 
-interface IResponse {
+interface IResponse<T = any> {
   code: number;
   description?: any;
-  errors?: "string";
+  status?: number;
+  errors:
+    | "string"
+    | {
+        "email or password": [];
+      };
+  data: T;
 }
-
 const defaultResponse = {
   code: 400,
   message: "err",
@@ -30,6 +35,7 @@ const AxiosUtill: React.FC<AxiosUtilProps> = ({ children }) => {
     request.headers = {
       ...request.headers,
       "X-Request-Host": window.location.origin,
+      Authorization: getToken,
     };
     return request;
   });
