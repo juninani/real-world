@@ -1,7 +1,8 @@
-import axios, { AxiosError, AxiosInstance, AxiosResponse } from "axios";
+import axios, { AxiosInstance } from "axios";
 import React from "react";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import { getToken } from "@/common/module/token";
+
 type AxiosUtilProps = {
   children: any;
 };
@@ -30,7 +31,7 @@ const apiClientInfo: AxiosInstance = axios.create({
 const { get, put, post, delete: destroy } = apiClientInfo;
 
 const AxiosUtill: React.FC<AxiosUtilProps> = ({ children }) => {
-  const navigate = useNavigate(); //로그인용
+  // const navigate = useNavigate(); //로그인용
   apiClientInfo.interceptors.request.use(async (request: any) => {
     request.headers = {
       ...request.headers,

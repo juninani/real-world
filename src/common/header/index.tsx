@@ -1,13 +1,12 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useRecoilValue } from "recoil";
-import { getToken } from "../module/token";
+// import { getToken } from "../module/token";
 import { userAccountStatus } from "../module/Store/commonRecoil";
+
 const Header = () => {
   const userAccountValue = useRecoilValue(userAccountStatus);
-  useEffect(() => {
-    console.log(getToken);
-  }, []);
+  useEffect(() => {}, []);
   return (
     <header>
       <nav className="navbar navbar-light">

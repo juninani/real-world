@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import Userlayout from "./user-layout";
-import { userLogin, userInfo } from "@/common/module/api/interface/user";
+import { useRecoilState } from "recoil";
+import { userLogin } from "@/common/module/api/interface/user";
 import User from "@/common/module/api/service/user";
 import { setToken } from "@/common/module/token";
 import { userAccountStatus } from "@/common/module/Store/commonRecoil";
-import { useRecoilState } from "recoil";
 import { useNavigate } from "react-router-dom";
+import Userlayout from "./user-layout";
+
 const SignIn = () => {
   const [loginData, setLoginData] = useState<userLogin>({
     email: "",
@@ -23,7 +24,6 @@ const SignIn = () => {
       return;
     }
     setErr(res.errors);
-    console.log(res);
   };
 
   const setUserData = (key: string, value: string) => {
