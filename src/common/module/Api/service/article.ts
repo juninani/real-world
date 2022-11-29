@@ -10,10 +10,12 @@ import {
   IGetArticleListAll,
   artcileSection,
   TagsProperty,
+  IGetArticleListSingle,
 } from "@/common/module/api/interface/article";
 import { getToken } from "../../token";
 
 const GET_ARTICLE_LIST_ALL = "/articles";
+const GET_ARTICLE_LIST_SINGLE = "/articles/{slug}";
 const GET_ARTICLE_TAG_LIST = "/tags";
 const POST_ARTICLE_FAV_LIST = "/articles/{slug}/favorite";
 const DELETE_ARTICLE_FAV = "/article/{slug}/favorite";
@@ -37,18 +39,25 @@ class ArticleAPI {
     }
     return defaultResponse;
   };
-  getAllArticleAuth = async (
-    data: artcileSection,
+
+  getSingleArticleList = async (
+    slug: string,
     config?: AxiosRequestConfig
-  ): Promise<IResponse<IGetArticleListAll>> => {
+  ): Promise<IResponse<IGetArticleListSingle>> => {
     try {
-      const res = await get(GET_ARTICLE_LIST_ALL, { ...config, params: data });
+      const res = await get(GET_ARTICLE_LIST_SINGLE.replace("{slug}", slug), {
+        ...config,
+        headers: {
+          Authorization: `Token ${getToken}`,
+        },
+      });
       return res;
     } catch (e) {
       console.error(e);
     }
     return defaultResponse;
   };
+
   getArticleTagAll = async (
     config?: AxiosRequestConfig
   ): Promise<IResponse<TagsProperty>> => {

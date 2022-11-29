@@ -30,7 +30,9 @@ interface IGetArticleListAll {
   articles: articleAll[];
   articlesCount: number;
 }
-
+interface IGetArticleListSingle {
+  article: articleAll;
+}
 interface articleTag {
   data: string;
 }
@@ -45,4 +47,5 @@ export type {
   IGetArticleListAll,
   artcileSection,
   TagsProperty,
+  IGetArticleListSingle,
 };

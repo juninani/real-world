@@ -68,7 +68,9 @@ const previewBox = ({
         </button>
       </div>
       <a href="" className="preview-link">
-        <h1>{slug}</h1>
+        <h1 onClick={() => navigator(`/article`, { state: { slug } })}>
+          {slug}
+        </h1>
         <p>{description}</p>
         <span>Read more...</span>
         <ul className="tag-list">
