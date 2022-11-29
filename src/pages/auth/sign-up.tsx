@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import User from "@/common/module/api/service/user";
-import Userlayout from "./user-layout";
 import { addUser } from "@/common/module/api/interface/user";
+import Userlayout from "./user-layout";
 
 const SignUp = () => {
   const [userData, setUserData] = useState<addUser>({

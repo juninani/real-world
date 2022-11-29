@@ -1,7 +1,3 @@
-import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
-import { addUser } from "@/common/module/api/interface/user";
-
 type errType = {
   "email or password"?: [];
 };
@@ -20,9 +16,6 @@ const index = ({
   name = false,
   errors,
 }: authProps) => {
-  useEffect(() => {
-    if (errors) console.log(errors["email or password"], "ㅁㄴㅇㅁㄴㅇㅁㄴㅇ");
-  }, [errors]);
   const buttonHander = () => {
     if (onClick) onClick();
   };

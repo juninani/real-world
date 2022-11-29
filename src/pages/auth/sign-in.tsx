@@ -19,6 +19,10 @@ const SignIn = () => {
     const res = await User.LoginUserData({ user: data });
     if (!res.errors) {
       setToken("token", res.user.token);
+      setToken("userName", res.user.username);
+      setToken("userImg", res.user.image);
+      setToken("userEmail", res.user.email);
+      setToken("userBio", res.user.bio);
       setAccountState(true);
       navigator("/");
       return;
