@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useRecoilValue } from "recoil";
-// import { getToken } from "../module/token";
 import { userAccountStatus } from "../module/Store/commonRecoil";
+import { getLocal } from "../module/token";
 
 const Header = () => {
   const userAccountValue = useRecoilValue(userAccountStatus);
@@ -38,12 +38,8 @@ const Header = () => {
                   ui-sref="app.profile.main({ username: $ctrl.currentUser.username })"
                   href="#/@juni"
                 >
-                  <img
-                    ng-src="https://api.realworld.io/images/smiley-cyrus.jpeg"
-                    className="user-pic"
-                    src="https://api.realworld.io/images/smiley-cyrus.jpeg"
-                  />
-                  juni
+                  <img className="user-pic" src={String(getLocal("userImg"))} />
+                  {String(getLocal("userName"))}
                 </a>
               </li>
             ) : (
