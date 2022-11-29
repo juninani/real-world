@@ -31,7 +31,7 @@ const previewBox = ({
       navigator("/sign-in");
       return;
     }
-    if (favorited) {
+    if (!favorited) {
       postFavData(slugData);
       return;
     }
