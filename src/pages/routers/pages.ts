@@ -5,6 +5,7 @@ import Article from "@/pages/article";
 import signIn from "@/pages/auth/sign-in";
 import signUp from "@/pages/auth/sign-up";
 import Settings from "@/pages/settings";
+
 interface PageInfo {
   path: string;
   component: (props?: any) => JSX.Element;

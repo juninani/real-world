@@ -1,7 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useRecoilValue } from "recoil";
+import { userAccountStatus } from "../module/Store/commonRecoil";
+import { getLocal } from "../module/token";
 
 const Header = () => {
+  const userAccountValue = useRecoilValue(userAccountStatus);
+  useEffect(() => {}, []);
   return (
     <header>
       <nav className="navbar navbar-light">
@@ -25,16 +30,32 @@ const Header = () => {
                 <i className="ion-gear-a"></i>&nbsp;Settings
               </Link>
             </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/sign-in">
-                Sign in
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/sign-up">
-                Sign up
-              </Link>
-            </li>
+            {userAccountValue ? (
+              <li className="nav-item">
+                <a
+                  className="nav-link ng-binding active"
+                  ui-sref-active="active"
+                  ui-sref="app.profile.main({ username: $ctrl.currentUser.username })"
+                  href="#/@juni"
+                >
+                  <img className="user-pic" src={String(getLocal("userImg"))} />
+                  {String(getLocal("userName"))}
+                </a>
+              </li>
+            ) : (
+              <>
+                <li className="nav-item">
+                  <Link className="nav-link" to="/sign-in">
+                    Sign in
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link className="nav-link" to="/sign-up">
+                    Sign up
+                  </Link>
+                </li>
+              </>
+            )}
           </ul>
         </div>
       </nav>

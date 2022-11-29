@@ -5,7 +5,7 @@
   "parserOptions": {
     "tsconfigRootDir": "__dirname"
   },
-  "plugins": ["react", "html"],
+  "plugins": ["react"],
   "rules": {},
   "globals": {
     "JSX": true
