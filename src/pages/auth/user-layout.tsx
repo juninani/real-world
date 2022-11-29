@@ -1,6 +1,3 @@
-// import { useLocation } from "react-router-dom";
-// import { addUser } from "@/common/module/api/interface/user";
-
 type errType = {
   "email or password"?: [];
 };

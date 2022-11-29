@@ -20,7 +20,13 @@ interface userInfo extends IResponse {
     image: string;
   };
 }
-
+interface userUpdate {
+  email: string;
+  username: string;
+  bio: string;
+  image: string;
+  password?: string;
+}
 interface edituser {
   email: string;
   password: string;
@@ -29,4 +35,4 @@ interface edituser {
   image: string;
 }
 
-export type { userLogin, addUser, userInfo, edituser };
+export type { userLogin, addUser, userInfo, edituser, userUpdate };

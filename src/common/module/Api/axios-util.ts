@@ -33,7 +33,6 @@ const AxiosUtill: React.FC<AxiosUtilProps> = ({ children }) => {
     request.headers = {
       ...request.headers,
       "X-Request-Host": window.location.origin,
-      // Authorization: `Token ${getToken}`,
     };
     return request;
   });
