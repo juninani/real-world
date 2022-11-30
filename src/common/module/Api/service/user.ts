@@ -46,7 +46,7 @@ class UserAPI {
       const res = await put(PUT_USER_DATA, data, {
         ...config,
         headers: {
-          Authorization: `Token ${getToken}`,
+          Authorization: `Token ${getToken()}`,
         },
       });
       return res.data;

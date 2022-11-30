@@ -20,6 +20,7 @@ const Home = () => {
   const [page, setPage] = useState<number>(0);
   const LIMIT = 10;
   const userAccountValue = useRecoilValue(userAccountStatus);
+
   useEffect(() => {
     getArticleListAll();
     getTagsList();
@@ -72,7 +73,7 @@ const Home = () => {
           <div className="col-md-9">
             <div className="feed-toggle">
               <ul className="nav nav-pills outline-active">
-                {getToken ? (
+                {getToken() ? (
                   <li className="nav-item">
                     <a className="nav-link disabled" href="">
                       Your Feed

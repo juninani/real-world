@@ -26,11 +26,10 @@ class ArticleAPI {
     config?: AxiosRequestConfig
   ): Promise<IResponse<IGetArticleListAll>> => {
     try {
-      console.log(getToken, "t");
       const res = await get(GET_ARTICLE_LIST_ALL, {
         ...config,
         headers: {
-          Authorization: getToken ? `Token ${getToken}` : null,
+          Authorization: getToken() ? `Token ${getToken()}` : null,
         },
         params: data,
       });
@@ -49,7 +48,7 @@ class ArticleAPI {
       const res = await get(GET_ARTICLE_LIST_SINGLE.replace("{slug}", slug), {
         ...config,
         headers: {
-          Authorization: `Token ${getToken}`,
+          Authorization: `Token ${getToken()}`,
         },
       });
       return res;
@@ -79,14 +78,14 @@ class ArticleAPI {
     config?: AxiosRequestConfig
   ): Promise<IResponse> => {
     try {
-      console.log(getToken);
+      console.log(getToken());
       const res = await post(
         POST_ARTICLE_FAV_LIST.replace("{slug}", slug),
         data,
         {
           ...config,
           headers: {
-            Authorization: `Token ${getToken}`,
+            Authorization: `Token ${getToken()}`,
           },
         }
       );
@@ -105,7 +104,7 @@ class ArticleAPI {
       const res = await destroy(DELETE_ARTICLE_FAV.replace("{slug}", slug), {
         ...config,
         headers: {
-          Authorization: `Token ${getToken}`,
+          Authorization: `Token ${getToken()}`,
         },
       });
       return res;

@@ -32,7 +32,7 @@ const previewBox = ({
   };
 
   const pickFavData = (slugData: string) => {
-    if (!getToken) {
+    if (!getToken()) {
       navigator("/sign-in");
       return;
     }

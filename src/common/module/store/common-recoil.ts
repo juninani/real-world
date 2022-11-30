@@ -9,4 +9,25 @@ const userAccountStatus = atom({
   effects_UNSTABLE: [persistAtom],
 });
 
-export { userAccountStatus };
+const localStorageEffect =
+  (key: string) =>
+  ({ setSelf, onSet }) => {
+    const savedValue = localStorage.getItem(key);
+    if (savedValue != null) {
+      setSelf(JSON.parse(savedValue));
+    }
+
+    onSet((newValue: any, _: any, isReset: any) => {
+      isReset
+        ? localStorage.removeItem(key)
+        : localStorage.setItem(key, JSON.stringify(newValue));
+    });
+  };
+
+const tokenStoredList = atom({
+  key: "tokenValue",
+  default: "",
+  effects_UNSTABLE: [localStorageEffect("token")],
+});
+
+export { userAccountStatus, tokenStoredList };
