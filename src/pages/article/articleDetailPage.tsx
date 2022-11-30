@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { articleAll } from "@/common/module/api/interface/article";
 import { toMonthFullName } from "@/common/module/helper/date-helper";
 import { getToken } from "@/common/module/token";
 import { useNavigate } from "react-router-dom";
 import Article from "@/common/module/api/service/article";
+import Profile from "@/common/module/api/service/profile";
 
 const index = ({
   slug,
@@ -26,6 +27,9 @@ const index = ({
     return `${toMonthFullName(Number(month))},${Number(day)}, ${year}`;
   };
 
+  useEffect(() => {
+    console.log(author, "춥당");
+  }, []);
   const pickFavData = (slugData: string) => {
     if (!getToken()) {
       navigator("/sign-in");
@@ -44,7 +48,9 @@ const index = ({
   const DelFavData = async (slugData: string) => {
     await Article.deleteArtcleFavData(slugData);
   };
-
+  const postFollowData = async (celeb: string) => {
+    await Profile.postFollow(celeb);
+  };
   return (
     <div className="article-page">
       <div className="banner">
@@ -61,7 +67,10 @@ const index = ({
               </a>
               <span className="date">{transDate(createdAt)}</span>
             </div>
-            <button className="btn btn-sm btn-outline-secondary">
+            <button
+              className="btn btn-sm btn-outline-secondary"
+              onClick={() => postFollowData(author.username)}
+            >
               <i className="ion-plus-round"></i>
               &nbsp;
               {!author.following

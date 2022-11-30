@@ -12,7 +12,7 @@ const index = () => {
 
   useEffect(() => {
     getSingleArticle(state.slug);
-  }, [article]);
+  }, []);
 
   const getSingleArticle = async (slug: string) => {
     const res = await Article.getSingleArticleList(slug);
