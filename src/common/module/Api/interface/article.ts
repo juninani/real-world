@@ -15,7 +15,6 @@ interface articleAll {
     following: boolean;
   };
 }
-
 interface TagsProperty {
   tags?: string[];
 }

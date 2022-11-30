@@ -12,12 +12,11 @@ const index = () => {
 
   useEffect(() => {
     getSingleArticle(state.slug);
-  }, []);
+  }, [article]);
 
   const getSingleArticle = async (slug: string) => {
     const res = await Article.getSingleArticleList(slug);
     setArticle(res.data);
-    console.log(res);
   };
   return (
     <div>

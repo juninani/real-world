@@ -5,6 +5,10 @@ import { articleAll } from "@/common/module/api/interface/article";
 import { toMonthFullName } from "@/common/module/helper/date-helper";
 import { getToken } from "@/common/module/token";
 
+interface preViewProps extends articleAll {
+  listUp?: () => void;
+}
+
 const previewBox = ({
   slug,
   title,
@@ -16,7 +20,8 @@ const previewBox = ({
   favorited,
   favoritesCount,
   author,
-}: articleAll) => {
+  listUp,
+}: preViewProps) => {
   const navigator = useNavigate();
   const transDate = (date: string) => {
     let trans = date.split("T")[0];
@@ -31,11 +36,15 @@ const previewBox = ({
       navigator("/sign-in");
       return;
     }
-    if (!favorited) {
-      postFavData(slugData);
-      return;
+    if (listUp) {
+      if (!favorited) {
+        postFavData(slugData);
+        listUp();
+        return;
+      }
+      DelFavData(slugData);
+      listUp();
     }
-    DelFavData(slugData);
   };
 
   const postFavData = async (slugData: string) => {
@@ -68,9 +77,7 @@ const previewBox = ({
         </button>
       </div>
       <a href="" className="preview-link">
-        <h1 onClick={() => navigator(`/article`, { state: { slug } })}>
-          {slug}
-        </h1>
+        <h1>{slug}</h1>
         <p>{description}</p>
         <span>Read more...</span>
         <ul className="tag-list">

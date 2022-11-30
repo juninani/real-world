@@ -18,7 +18,7 @@ const GET_ARTICLE_LIST_ALL = "/articles";
 const GET_ARTICLE_LIST_SINGLE = "/articles/{slug}";
 const GET_ARTICLE_TAG_LIST = "/tags";
 const POST_ARTICLE_FAV_LIST = "/articles/{slug}/favorite";
-const DELETE_ARTICLE_FAV = "/article/{slug}/favorite";
+const DELETE_ARTICLE_FAV = "/articles/{slug}/favorite";
 
 class ArticleAPI {
   getAllArticleList = async (
@@ -26,10 +26,11 @@ class ArticleAPI {
     config?: AxiosRequestConfig
   ): Promise<IResponse<IGetArticleListAll>> => {
     try {
+      console.log(getToken, "t");
       const res = await get(GET_ARTICLE_LIST_ALL, {
         ...config,
         headers: {
-          Authorization: `Token ${getToken}`,
+          Authorization: getToken ? `Token ${getToken}` : null,
         },
         params: data,
       });
@@ -78,6 +79,7 @@ class ArticleAPI {
     config?: AxiosRequestConfig
   ): Promise<IResponse> => {
     try {
+      console.log(getToken);
       const res = await post(
         POST_ARTICLE_FAV_LIST.replace("{slug}", slug),
         data,

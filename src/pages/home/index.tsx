@@ -7,7 +7,9 @@ import {
 import { Pagination } from "@/common";
 import { getToken, getLocal } from "@/common/module/token";
 import { useUpdateEffect } from "react-use";
-import PreviewBox from "./previewBox";
+import { useRecoilValue } from "recoil";
+import { userAccountStatus } from "@/common/module/store/common-recoil";
+import PreviewBox from "./preview-box";
 import TagBox from "./tagBox";
 
 const Home = () => {
@@ -17,7 +19,7 @@ const Home = () => {
   const [curTag, setCurTag] = useState<string>("");
   const [page, setPage] = useState<number>(0);
   const LIMIT = 10;
-
+  const userAccountValue = useRecoilValue(userAccountStatus);
   useEffect(() => {
     getArticleListAll();
     getTagsList();
@@ -25,10 +27,11 @@ const Home = () => {
 
   useUpdateEffect(() => {
     getArticleListAll();
-  }, [curTag, page, getLocal("userName")]);
+  }, [curTag, page, getLocal("userName"), userAccountValue]);
   useUpdateEffect(() => {
     setPage(0);
   }, [curTag]);
+
   const getArticleListAll = async () => {
     const res = await Article.getAllArticleList({
       limit: LIMIT,
@@ -99,6 +102,7 @@ const Home = () => {
                     favoritesCount={item?.favoritesCount}
                     author={item?.author}
                     key={`${item.title}_${index}`}
+                    listUp={() => getArticleListAll()}
                   />
                 );
               })}

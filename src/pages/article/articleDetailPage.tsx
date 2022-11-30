@@ -31,7 +31,7 @@ const index = ({
       navigator("/sign-in");
       return;
     }
-    if (favorited) {
+    if (!favorited) {
       postFavData(slugData);
       console.log("d");
       return;
