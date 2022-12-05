@@ -17,7 +17,5 @@ const toMonthFullName = (month: number) => {
   let monthName = monthData[month];
   return monthName;
 };
-const toDate = (week?: number) => {
-  return week;
-};
-export { toMonthFullName, toDate };
+
+export { toMonthFullName };

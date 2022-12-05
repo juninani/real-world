@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { articleAll } from "@/common/module/api/interface/article";
 import { toMonthFullName } from "@/common/module/helper/date-helper";
 import { getToken } from "@/common/module/token";
 import { useNavigate } from "react-router-dom";
 import Article from "@/common/module/api/service/article";
 import Profile from "@/common/module/api/service/profile";
+import ArticleComments from "./articleComments";
 
 const index = ({
   slug,
@@ -19,6 +20,8 @@ const index = ({
   author,
 }: articleAll) => {
   const navigator = useNavigate();
+  const [fav, setFav] = useState<boolean>(favorited);
+  const [follow, setFollw] = useState(author.following);
   const transDate = (date: string) => {
     let trans = date.split("T")[0];
     let day = trans.split("-")[2];
@@ -26,16 +29,19 @@ const index = ({
     let year = trans.split("-")[0];
     return `${toMonthFullName(Number(month))},${Number(day)}, ${year}`;
   };
+
   const pickFavData = (slugData: string) => {
     if (!getToken()) {
       navigator("/sign-in");
       return;
     }
-    if (!favorited) {
+    if (!fav) {
       postFavData(slugData);
+      setFav(true);
       return;
     }
     DelFavData(slugData);
+    setFav(false);
   };
 
   const pickFollowData = (userName: string) => {
@@ -43,11 +49,13 @@ const index = ({
       navigator("/sign-in");
       return;
     }
-    if (!author.following) {
+    if (!follow) {
       postFollowData(userName);
+      setFollw(true);
       return;
     }
     delFollowData(userName);
+    setFollw(false);
   };
 
   const postFavData = async (slugData: string) => {
@@ -81,13 +89,13 @@ const index = ({
             </div>
             <button
               className={`btn btn-sm action-button ${
-                !author.following ? "btn-outline-secondary" : "btn-secondary"
+                !follow ? "btn-outline-secondary" : "btn-secondary"
               }`}
               onClick={() => pickFollowData(author.username)}
             >
               <i className="ion-plus-round"></i>
               &nbsp;
-              {!author.following
+              {!follow
                 ? `Follow ${author.username}`
                 : `Unfollow ${author.username}`}
             </button>
@@ -95,12 +103,14 @@ const index = ({
             <button
               onClick={() => pickFavData(slug)}
               className={`btn btn-sm ${
-                !favorited ? "btn-outline-primary" : "btn-primary"
+                !fav ? "btn-outline-primary" : "btn-primary"
               }`}
             >
               <i className="ion-heart"></i>
               &nbsp; Favorite Post
-              <span className="counter">({favoritesCount})</span>
+              <span className="counter">
+                ({fav ? favoritesCount + 1 : favoritesCount})
+              </span>
             </button>
           </div>
         </div>
@@ -112,16 +122,17 @@ const index = ({
             <p>{body}</p>
           </div>
           <ul className="tag-list">
-            {tagList.map((item) => (
-              <li className="tag-default tag-pill tag-outline ng-binding ng-scope">
+            {tagList.map((item, index) => (
+              <li
+                key={`${item}_${index}`}
+                className="tag-default tag-pill tag-outline ng-binding ng-scope"
+              >
                 {item}
               </li>
             ))}
           </ul>
         </div>
-
         <hr />
-
         <div className="article-actions">
           <div className="article-meta">
             <a href="profile.html">
@@ -135,95 +146,29 @@ const index = ({
             </div>
             <button
               className={`btn btn-sm action-button ${
-                !author.following ? "btn-outline-secondary" : "btn-secondary"
+                !follow ? "btn-outline-secondary" : "btn-secondary"
               }`}
             >
               <i className="ion-plus-round"></i>
-              {!author.following
+              {!follow
                 ? `Follow ${author.username}`
                 : `Unfollow ${author.username}`}
             </button>
             &nbsp;
             <button
               className={`btn btn-sm ${
-                !favorited ? "btn-outline-primary" : "btn-primary"
+                !fav ? "btn-outline-primary" : "btn-primary"
               }`}
             >
               <i className="ion-heart"></i>
-              &nbsp; Favorite Post{" "}
-              <span className="counter">({favoritesCount})</span>
+              &nbsp; Favorite Post
+              <span className="counter">
+                ({fav ? favoritesCount + 1 : favoritesCount})
+              </span>
             </button>
           </div>
         </div>
-
-        <div className="row">
-          <div className="col-xs-12 col-md-8 offset-md-2">
-            <form className="card comment-form">
-              <div className="card-block">
-                <textarea
-                  className="form-control"
-                  placeholder="Write a comment..."
-                  rows={3}
-                ></textarea>
-              </div>
-              <div className="card-footer">
-                <img
-                  src="http://i.imgur.com/Qr71crq.jpg"
-                  className="comment-author-img"
-                />
-                <button className="btn btn-sm btn-primary">Post Comment</button>
-              </div>
-            </form>
-
-            <div className="card">
-              <div className="card-block">
-                <p className="card-text">
-                  With supporting text below as a natural lead-in to additional
-                  content.
-                </p>
-              </div>
-              <div className="card-footer">
-                <a href="" className="comment-author">
-                  <img
-                    src="http://i.imgur.com/Qr71crq.jpg"
-                    className="comment-author-img"
-                  />
-                </a>
-                &nbsp;
-                <a href="" className="comment-author">
-                  Jacob Schmidt
-                </a>
-                <span className="date-posted">Dec 29th</span>
-              </div>
-            </div>
-
-            <div className="card">
-              <div className="card-block">
-                <p className="card-text">
-                  With supporting text below as a natural lead-in to additional
-                  content.
-                </p>
-              </div>
-              <div className="card-footer">
-                <a href="" className="comment-author">
-                  <img
-                    src="http://i.imgur.com/Qr71crq.jpg"
-                    className="comment-author-img"
-                  />
-                </a>
-                &nbsp;
-                <a href="" className="comment-author">
-                  Jacob Schmidt
-                </a>
-                <span className="date-posted">Dec 29th</span>
-                <span className="mod-options">
-                  <i className="ion-edit"></i>
-                  <i className="ion-trash-a"></i>
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
+        <ArticleComments slug={slug} />
       </div>
     </div>
   );
