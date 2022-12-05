@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { IGetArticleListSingle } from "@/common/module/api/interface/article";
 import Article from "@/common/module/api/service/article";
-
+import { useUpdateEffect } from "react-use";
 import ArticleDetailPage from "./articleDetailPage";
 
 const index = () => {
@@ -13,7 +13,9 @@ const index = () => {
   useEffect(() => {
     getSingleArticle(state.slug);
   }, []);
-
+  useUpdateEffect(() => {
+    getSingleArticle(state.slug);
+  }, [article]);
   const getSingleArticle = async (slug: string) => {
     const res = await Article.getSingleArticleList(slug);
     setArticle(res.data);

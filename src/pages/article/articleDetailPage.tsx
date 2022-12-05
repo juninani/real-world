@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { articleAll } from "@/common/module/api/interface/article";
 import { toMonthFullName } from "@/common/module/helper/date-helper";
 import { getToken } from "@/common/module/token";
@@ -26,10 +26,6 @@ const index = ({
     let year = trans.split("-")[0];
     return `${toMonthFullName(Number(month))},${Number(day)}, ${year}`;
   };
-
-  useEffect(() => {
-    console.log(author, "춥당");
-  }, []);
   const pickFavData = (slugData: string) => {
     if (!getToken()) {
       navigator("/sign-in");
@@ -37,11 +33,23 @@ const index = ({
     }
     if (!favorited) {
       postFavData(slugData);
-      console.log("d");
       return;
     }
     DelFavData(slugData);
   };
+
+  const pickFollowData = (userName: string) => {
+    if (!getToken()) {
+      navigator("/sign-in");
+      return;
+    }
+    if (!author.following) {
+      postFollowData(userName);
+      return;
+    }
+    delFollowData(userName);
+  };
+
   const postFavData = async (slugData: string) => {
     await Article.postArticleFavData(slugData, null);
   };
@@ -51,6 +59,10 @@ const index = ({
   const postFollowData = async (celeb: string) => {
     await Profile.postFollow(celeb);
   };
+  const delFollowData = async (userName: string) => {
+    await Profile.delFollow(userName);
+  };
+
   return (
     <div className="article-page">
       <div className="banner">
@@ -68,8 +80,10 @@ const index = ({
               <span className="date">{transDate(createdAt)}</span>
             </div>
             <button
-              className="btn btn-sm btn-outline-secondary"
-              onClick={() => postFollowData(author.username)}
+              className={`btn btn-sm action-button ${
+                !author.following ? "btn-outline-secondary" : "btn-secondary"
+              }`}
+              onClick={() => pickFollowData(author.username)}
             >
               <i className="ion-plus-round"></i>
               &nbsp;
@@ -119,9 +133,12 @@ const index = ({
               </a>
               <span className="date">{transDate(createdAt)}</span>
             </div>
-            <button className="btn btn-sm btn-outline-secondary">
+            <button
+              className={`btn btn-sm action-button ${
+                !author.following ? "btn-outline-secondary" : "btn-secondary"
+              }`}
+            >
               <i className="ion-plus-round"></i>
-              &nbsp;{" "}
               {!author.following
                 ? `Follow ${author.username}`
                 : `Unfollow ${author.username}`}
