@@ -1,14 +1,21 @@
-import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
-import { addUser } from "@/common/module/Api/interface/user";
-
+type errType = {
+  "email or password"?: [];
+};
 interface authProps {
   title: string;
   onChange?: (key: string, value: string) => void;
   onClick?: () => void;
+  name?: boolean;
+  errors?: errType;
 }
 
-const index = ({ title, onChange, onClick }: authProps) => {
+const index = ({
+  title,
+  onChange,
+  onClick,
+  name = false,
+  errors,
+}: authProps) => {
   const buttonHander = () => {
     if (onClick) onClick();
   };
@@ -25,20 +32,29 @@ const index = ({ title, onChange, onClick }: authProps) => {
                 <a href="/sign-up">don't Have an account?</a>
               )}
             </p>
-
             <ul className="error-messages">
-              {/* <li>That email is already taken</li> */}
+              {}
+              <li>
+                {errors && errors["email or password"]
+                  ? `${Object.keys(errors)}_${errors["email or password"]}`
+                  : ""}
+              </li>
             </ul>
-            <fieldset className="form-group">
-              <input
-                className="form-control form-control-lg"
-                type="text"
-                placeholder="Your Name"
-                onChange={
-                  onChange ? (e) => onChange("name", e.target.value) : undefined
-                }
-              />
-            </fieldset>
+            {name ? (
+              <fieldset className="form-group">
+                <input
+                  className="form-control form-control-lg"
+                  type="text"
+                  placeholder="Your Name"
+                  onChange={
+                    onChange
+                      ? (e) => onChange("username", e.target.value)
+                      : undefined
+                  }
+                />
+              </fieldset>
+            ) : null}
+
             <fieldset className="form-group">
               <input
                 className="form-control form-control-lg"
@@ -51,6 +67,7 @@ const index = ({ title, onChange, onClick }: authProps) => {
                 }
               />
             </fieldset>
+
             <fieldset className="form-group">
               <input
                 className="form-control form-control-lg"
