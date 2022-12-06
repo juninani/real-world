@@ -11,7 +11,6 @@ const index = () => {
 
   useEffect(() => {
     getSingleArticle(state.slug);
-    console.log("들어옴");
   }, []);
 
   const getSingleArticle = async (slug: string) => {

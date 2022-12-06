@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { articleAll } from "@/common/module/api/interface/article";
 import { toMonthFullName } from "@/common/module/helper/date-helper";
-import { getToken } from "@/common/module/token";
-import { useNavigate } from "react-router-dom";
+import { getLocal, getToken } from "@/common/module/token";
+import { Link, useNavigate } from "react-router-dom";
 import Article from "@/common/module/api/service/article";
 import Profile from "@/common/module/api/service/profile";
 import ArticleComments from "./articleComments";
@@ -70,7 +70,10 @@ const index = ({
   const delFollowData = async (userName: string) => {
     await Profile.delFollow(userName);
   };
-
+  const delArticleData = async (slugData: string) => {
+    await Article.delArticle(slugData);
+    navigator("/");
+  };
   return (
     <div className="article-page">
       <div className="banner">
@@ -87,31 +90,56 @@ const index = ({
               </a>
               <span className="date">{transDate(createdAt)}</span>
             </div>
-            <button
-              className={`btn btn-sm action-button ${
-                !follow ? "btn-outline-secondary" : "btn-secondary"
-              }`}
-              onClick={() => pickFollowData(author.username)}
-            >
-              <i className="ion-plus-round"></i>
-              &nbsp;
-              {!follow
-                ? `Follow ${author.username}`
-                : `Unfollow ${author.username}`}
-            </button>
-            &nbsp;&nbsp;
-            <button
-              onClick={() => pickFavData(slug)}
-              className={`btn btn-sm ${
-                !fav ? "btn-outline-primary" : "btn-primary"
-              }`}
-            >
-              <i className="ion-heart"></i>
-              &nbsp; Favorite Post
-              <span className="counter">
-                ({fav ? favoritesCount + 1 : favoritesCount})
+            {author.username === String(getLocal("userName")) ? (
+              <span className="ng-scope">
+                <Link
+                  className="btn btn-outline-secondary btn-sm"
+                  to={`/managementArticle`}
+                  state={{
+                    title: slug,
+                    body: body,
+                    tagList: tagList,
+                    description: description,
+                  }}
+                >
+                  <i className="ion-edit"></i> Edit Article
+                </Link>
+                <button
+                  onClick={() => delArticleData(slug)}
+                  className="btn btn-outline-danger btn-sm"
+                >
+                  <i className="ion-trash-a"></i> Delete Article
+                </button>
               </span>
-            </button>
+            ) : (
+              <>
+                <button
+                  className={`btn btn-sm action-button ${
+                    !follow ? "btn-outline-secondary" : "btn-secondary"
+                  }`}
+                  onClick={() => pickFollowData(author.username)}
+                >
+                  <i className="ion-plus-round"></i>
+                  &nbsp;
+                  {!follow
+                    ? `Follow ${author.username}`
+                    : `Unfollow ${author.username}`}
+                </button>
+                &nbsp;&nbsp;
+                <button
+                  onClick={() => pickFavData(slug)}
+                  className={`btn btn-sm ${
+                    !fav ? "btn-outline-primary" : "btn-primary"
+                  }`}
+                >
+                  <i className="ion-heart"></i>
+                  &nbsp; Favorite Post
+                  <span className="counter">
+                    ({fav ? favoritesCount + 1 : favoritesCount})
+                  </span>
+                </button>
+              </>
+            )}
           </div>
         </div>
       </div>

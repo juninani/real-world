@@ -1,13 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Article from "@/common/module/api/service/article";
 import { newArticle } from "@/common/module/api/interface/article";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const index = () => {
+  const navigator = useNavigate();
+  const location = useLocation();
+  useEffect(() => {
+    console.log(location);
+  }, []);
   const [newArticle, setNewArticle] = useState<newArticle>({
-    title: "",
-    description: "",
-    body: "",
-    tagList: [],
+    title: location.state ? location.state.title : "",
+    description: location.state ? location.state.description : "",
+    body: location.state ? location.state.body : "",
+    tagList: location.state ? location.state.tagList : [],
   });
 
   const [tagList, setTagList] = useState<string>("");
@@ -40,9 +46,22 @@ const index = () => {
     }
   };
 
+  const handleUpdateArticle = async (data: newArticle) => {
+    await Article.putUpdateArticle({ article: data }, location.state.title);
+  };
+
+  const handleCreateArticle = async (data: newArticle) => {
+    await Article.postCreateArticle({ article: data });
+  };
+
   const handleSubmit = async (data: newArticle) => {
-    const res = await Article.postCreateArticle({ article: data });
-    console.log(res);
+    if (location.state) {
+      handleUpdateArticle(data);
+      navigator("/");
+      return;
+    }
+    handleCreateArticle(data);
+    navigator("/");
   };
 
   const tagData = newArticle.tagList.map((item, index) => {

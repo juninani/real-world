@@ -5,6 +5,7 @@ import {
   defaultResponse,
   post,
   destroy,
+  put,
 } from "@/common/module/api/axios-util";
 import {
   IGetArticleListAll,
@@ -24,6 +25,8 @@ const GET_ARTICLE_LIST_ALL = "/articles";
 const GET_ARTICLE_LIST_SINGLE = "/articles/{slug}";
 const GET_ARTICLE_TAG_LIST = "/tags";
 const CREATE_ARTICLE = "/articles";
+const DELETE_ARTICLE = "articles/{slug}";
+const UPDATE_ARTICLE = "articles/{slug}";
 const POST_ARTICLE_FAV_LIST = "/articles/{slug}/favorite";
 const DELETE_ARTICLE_FAV = "/articles/{slug}/favorite";
 const ARTICLE_COMMENTS = "/articles/{slug}/comments";
@@ -85,7 +88,6 @@ class ArticleAPI {
     data: { article: newArticle },
     config?: AxiosRequestConfig
   ): Promise<IResponse> => {
-    console.log(data);
     try {
       const res = await post(CREATE_ARTICLE, data, {
         ...config,
@@ -99,7 +101,41 @@ class ArticleAPI {
     }
     return defaultResponse;
   };
-
+  putUpdateArticle = async (
+    data: { article: newArticle },
+    slug: string,
+    config?: AxiosRequestConfig
+  ): Promise<IResponse> => {
+    try {
+      const res = await put(UPDATE_ARTICLE.replace("{slug}", slug), data, {
+        ...config,
+        headers: {
+          Authorization: getToken() ? `Token ${getToken()}` : null,
+        },
+      });
+      return res;
+    } catch (e) {
+      console.error(e);
+    }
+    return defaultResponse;
+  };
+  delArticle = async (
+    slug: string,
+    config?: AxiosRequestConfig
+  ): Promise<IResponse> => {
+    try {
+      const res = await destroy(DELETE_ARTICLE.replace("{slug}", slug), {
+        ...config,
+        headers: {
+          Authorization: getToken() ? `Token ${getToken()}` : null,
+        },
+      });
+      return res;
+    } catch (e) {
+      console.error(e);
+    }
+    return defaultResponse;
+  };
   postArticleFavData = async (
     slug: string,
     data: any,
