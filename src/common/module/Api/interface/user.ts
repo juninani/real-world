@@ -1,3 +1,5 @@
+import { IResponse } from "../axios-util";
+
 interface userLogin {
   email: string;
   password: string;
@@ -6,17 +8,25 @@ interface userLogin {
 interface addUser {
   email: string;
   password: string;
-  name: string;
+  username: string;
 }
 
-interface userInfo {
+interface userInfo extends IResponse {
+  user: {
+    email: string;
+    token: string;
+    username: string;
+    bio: string;
+    image: string;
+  };
+}
+interface userUpdate {
   email: string;
-  token: string;
   username: string;
   bio: string;
   image: string;
+  password?: string;
 }
-
 interface edituser {
   email: string;
   password: string;
@@ -25,4 +35,4 @@ interface edituser {
   image: string;
 }
 
-export type { userLogin, addUser, userInfo, edituser };
+export type { userLogin, addUser, userInfo, edituser, userUpdate };
