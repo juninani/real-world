@@ -11,6 +11,7 @@ import {
   artcileSection,
   TagsProperty,
   IGetArticleListSingle,
+  newArticle,
 } from "@/common/module/api/interface/article";
 import {
   ICommentsProps,
@@ -22,6 +23,7 @@ import { getToken } from "../../token";
 const GET_ARTICLE_LIST_ALL = "/articles";
 const GET_ARTICLE_LIST_SINGLE = "/articles/{slug}";
 const GET_ARTICLE_TAG_LIST = "/tags";
+const CREATE_ARTICLE = "/articles";
 const POST_ARTICLE_FAV_LIST = "/articles/{slug}/favorite";
 const DELETE_ARTICLE_FAV = "/articles/{slug}/favorite";
 const ARTICLE_COMMENTS = "/articles/{slug}/comments";
@@ -71,6 +73,25 @@ class ArticleAPI {
     try {
       const res = await get(GET_ARTICLE_TAG_LIST, {
         ...config,
+      });
+      return res;
+    } catch (e) {
+      console.error(e);
+    }
+    return defaultResponse;
+  };
+
+  postCreateArticle = async (
+    data: { article: newArticle },
+    config?: AxiosRequestConfig
+  ): Promise<IResponse> => {
+    console.log(data);
+    try {
+      const res = await post(CREATE_ARTICLE, data, {
+        ...config,
+        headers: {
+          Authorization: getToken() ? `Token ${getToken()}` : null,
+        },
       });
       return res;
     } catch (e) {

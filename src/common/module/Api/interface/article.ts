@@ -36,9 +36,15 @@ interface articleTag {
   data: string;
 }
 
-// interface articleFav{
-
-// }
+interface newArticle {
+  title: string;
+  description: string;
+  body: string;
+  tagList: Array<string>;
+}
+interface INewArticle {
+  article: newArticle;
+}
 
 export type {
   articleAll,
@@ -47,4 +53,6 @@ export type {
   artcileSection,
   TagsProperty,
   IGetArticleListSingle,
+  INewArticle,
+  newArticle,
 };
